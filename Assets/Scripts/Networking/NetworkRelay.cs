@@ -53,8 +53,8 @@ public class NetworkRelay : MonoBehaviour
     {
         get
         {
-            if (_unityTransport == null) _unityTransport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-            if (_unityTransport == null) throw new System.Exception("There is no UnityTransport script attached to the NetworkManager");
+            if (_unityTransport == null) _unityTransport = NetworkManager.Singleton.GetComponentInChildren<UnityTransport>();
+            if (_unityTransport == null) throw new System.Exception("There is no UnityTransport component in any children of the NetworkManager.");
             return _unityTransport;
         }
     }
