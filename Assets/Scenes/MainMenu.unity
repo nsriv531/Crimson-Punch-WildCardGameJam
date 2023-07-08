@@ -1677,7 +1677,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Level1
+          m_StringArgument: MarkScene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &629097308
@@ -1763,6 +1763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9745d7737721cdf409735f0fa1a0c339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onLocalPlayerFound:
+    m_PersistentCalls:
+      m_Calls: []
+  _localPlayerFound: 0
 --- !u!4 &640599243
 Transform:
   m_ObjectHideFlags: 0
@@ -3203,7 +3207,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1164500227
 RectTransform:
   m_ObjectHideFlags: 0

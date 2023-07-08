@@ -57,7 +57,6 @@ GameObject:
   - component: {fileID: 6243075919736245984}
   - component: {fileID: -8252911632702440539}
   - component: {fileID: 2280822664717613462}
-  - component: {fileID: 5687150654729331107}
   m_Layer: 0
   m_Name: Dancer
   m_TagString: Untagged
@@ -126,6 +125,11 @@ MonoBehaviour:
   movementSpeed: 1
   rotationSpeed: 1
   glanceSpeed: 2
+  _currentPathIndex: 0
+  _state: 0
+  _idleTargetLookPosition: {x: 0, y: 0, z: 0}
+  state:
+    m_InternalValue: 0
 --- !u!195 &2280822664717613462
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -148,15 +152,3 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 1
---- !u!114 &5687150654729331107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7522897665647390073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88503f99e6525a14ba0584a5ac968611, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

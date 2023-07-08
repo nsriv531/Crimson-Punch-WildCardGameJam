@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Character))]
 public class NetworkNPCMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Character _character;
+    [HideInInspector] public Character character
     {
-        
+        get
+        {
+            if (_character == null) _character = GetComponent<Character>();
+            return _character;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
