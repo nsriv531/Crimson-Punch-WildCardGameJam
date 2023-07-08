@@ -29,6 +29,8 @@ public class SpawnPoint : MonoBehaviour
     /// </summary>
     public void SpawnCopy(Character character)
     {
+        if (character.gameObject == LocalPlayer.gameObject) throw new System.Exception("Spawning a copy of the local player is not allowed.");
+
         GameObject newGO = null;
         newGO = Instantiate(character.gameObject, transform.position, GetRotation(), null);
 
@@ -43,9 +45,7 @@ public class SpawnPoint : MonoBehaviour
         Quaternion rotation = transform.rotation;
         if (randomRotation)
         {
-            float x = Random.Range(0f, 360f);
-            float z = Random.Range(0f, 360f);
-            rotation = Quaternion.Euler(new Vector3(x, 0f, z));
+            rotation = Quaternion.Euler(new Vector3(0f, Random.Range(0f, 360f), 0f));
         }
         return rotation;
     }
