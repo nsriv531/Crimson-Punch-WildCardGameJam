@@ -141,6 +141,8 @@ public class NetworkRelay : MonoBehaviour
             SetRelayServerData(joinAllocation);
             onAllocationJoined.Invoke();
 
+            Debug.Log("Allocation joined");
+
             NetworkManager.Singleton.StartClient();
 
             // Spawn a player for the client (why isn't this done automatically anymore??)
