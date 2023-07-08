@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 4361267936676058941}
   - component: {fileID: 4156359097543310287}
   - component: {fileID: 6243075919736245984}
+  - component: {fileID: 2535699221062399977}
   m_Layer: 0
   m_Name: Dancer
   m_TagString: Untagged
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdcb8bea5f7666a44bf739480a3ee13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alive: 1
+  _alive: 1
 --- !u!114 &6243075919736245984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,3 +168,15 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &2535699221062399977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7522897665647390073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2319547cf5bf489428833d9e2743f17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

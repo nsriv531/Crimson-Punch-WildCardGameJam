@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -17,6 +16,16 @@ public class EscapeButtonHandler : MonoBehaviour
 
     public List<Component> components = new List<Component>();
 
+    private Character _character;
+    [HideInInspector] public Character character
+    {
+        get
+        {
+            if (_character == null) _character = GetComponentInParent<Character>(true);
+            if (_character == null) _character = GetComponentInChildren<Character>(true);
+            return _character;
+        }
+    }
 
     public enum Mode
     {
@@ -37,8 +46,9 @@ public class EscapeButtonHandler : MonoBehaviour
     {
         if (!enabled) return;
         
-        //if (character != null)
-        //    if (!character.IsOwner) return;
+        // Don't fire this method on other player's computers
+        if (character != null)
+            if (!character.IsOwner) return;
 
         //Debug.Log(components.GetString());
         foreach (Component component in new List<Component>(components))

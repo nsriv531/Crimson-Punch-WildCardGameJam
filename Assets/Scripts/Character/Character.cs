@@ -15,10 +15,26 @@ public class Character : NetworkBehaviour
 
     private NetworkVariable<bool> n_alive = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
+    public static Dictionary<ulong, Character> clientIds;
+
+
     // Awake -> OnEnable -> OnNetworkSpawn -> Start
     void Awake()
     {
         n_alive.OnValueChanged += (bool previous, bool current) => alive = current;
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkDespawn();
+        if (clientIds == null) clientIds = new Dictionary<ulong, Character>();
+        clientIds.Add(OwnerClientId, this);
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        clientIds.Remove(OwnerClientId);
+        base.OnNetworkDespawn();
     }
 
     /// <summary>
