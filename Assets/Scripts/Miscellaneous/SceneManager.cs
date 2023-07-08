@@ -2,14 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.TextCore.Text;
 
 public class SceneManager : MonoBehaviour
 {
     [SerializeField] private string mainMenuName = "MainMenu";
 
+    [SerializeField] private UnityEvent onSceneLoaded = new UnityEvent();
+
     private const LoadSceneMode defaultLoadSceneMode = LoadSceneMode.Single;
+
+    void Awake()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) => onSceneLoaded.Invoke();
+    }
 
     public void LoadScene(string name, LoadSceneMode mode = defaultLoadSceneMode)
     {

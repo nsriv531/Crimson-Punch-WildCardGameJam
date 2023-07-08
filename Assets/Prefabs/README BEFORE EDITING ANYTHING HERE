@@ -1,0 +1,2 @@
+This folder is used for networking stuff. This folder should contain ONLY prefabs and NO sub folders (I haven't tested sub folders)
+Adding things to this folder could cause unexpected behavior. Removing things definitely WILL cause unexpected behavior.

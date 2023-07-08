@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2169066280862497124
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4361267936676058941, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361267936676058941, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361267936676058941, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4361267936676058941, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243075919736245984, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7522897665647390073, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+--- !u!4 &2493943466773884505 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4361267936676058941, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+  m_PrefabInstance: {fileID: 2169066280862497124}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8899895888574770604
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2493943466773884505}
+    m_Modifications:
+    - target: {fileID: 3967946109889081397, guid: d6cd33eedb69d774e9492041f68ce121, type: 3}
+      propertyPath: m_Name
+      value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901788879985660467, guid: d6cd33eedb69d774e9492041f68ce121, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901788879985660467, guid: d6cd33eedb69d774e9492041f68ce121, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901788879985660467, guid: d6cd33eedb69d774e9492041f68ce121, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901788879985660467, guid: d6cd33eedb69d774e9492041f68ce121, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d6cd33eedb69d774e9492041f68ce121, type: 3}

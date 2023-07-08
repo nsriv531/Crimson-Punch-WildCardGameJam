@@ -47,13 +47,4 @@ public class NetworkManagerHelper : MonoBehaviour
         //if (debug) networkRelay.onConnected.AddListener(() => SetLocalPlayerActive(true));
         networkManager.StartClient();
     }
-
-    /*
-    public void SetLocalPlayerActive(bool value)
-    {
-        Character localCharacter = NetworkManager.Singleton.GetCharacter(NetworkManager.Singleton.LocalClientId);
-        Debug.Log(localCharacter);
-        if (localCharacter != null) localCharacter.gameObject.SetActive(value);
-    }
-    */
 }
