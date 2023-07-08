@@ -37,6 +37,10 @@ public class Targeting : MonoBehaviour
     [ReadOnly, SerializeField] private Targeting _targetTargeting;
     [ReadOnly] public List<Character> targetOf = new List<Character>();
 
+    [SerializeField] private bool verbose = false;
+
+    [SerializeField] private GameObject debugTargetObject;
+
     [HideInInspector] public Character target
     {
         get => _target;
@@ -62,13 +66,15 @@ public class Targeting : MonoBehaviour
     
     public void SetTarget(Character target)
     {
+        if (verbose) Debug.Log("SetTarget " + target.gameObject, gameObject);
+
         // If we already have a target, clear our target.
         if (this.target != null) ClearTarget();
 
         // Set the new target
         this.target = target;
 
-        targetTargeting = target.GetComponent<Targeting>();
+        targetTargeting = target.GetComponentInChildren<Targeting>(true);
         if (targetTargeting == null) throw new System.Exception("Failed to find a Targeting component attached to Character " + target.gameObject);
 
         targetTargeting.targetOf.Add(character);
@@ -76,9 +82,12 @@ public class Targeting : MonoBehaviour
         onTargetSet.Invoke();
         targetTargeting.onTargeted.Invoke();
     }
+    public void SetTarget(GameObject target) => SetTarget(target.GetComponent<Character>());
 
     public void ClearTarget()
     {
+        if (verbose) Debug.Log("ClearTarget", gameObject);
+
         if (target == null) throw new System.Exception("Cannot clear target because there is no target set for " + gameObject);
         if (targetTargeting == null) throw new System.Exception("targetTargeting is null for " + gameObject);
 
@@ -86,9 +95,9 @@ public class Targeting : MonoBehaviour
         targetTargeting.targetOf.Remove(character);
 
         target = null;
+        targetTargeting.onUntargeted.Invoke();
         targetTargeting = null;
         onTargetCleared.Invoke();
-        targetTargeting.onUntargeted.Invoke();
     }
 }
 
@@ -97,7 +106,8 @@ public class Targeting : MonoBehaviour
 [CustomEditor(typeof(Targeting))]
 public class TargetingEditor : Editor
 {
-    private SerializedProperty onTargetSet, onTargeted, onTargetCleared, onUntargeted, _target, _targetTargeting, targetOf;
+    private SerializedProperty onTargetSet, onTargeted, onTargetCleared, onUntargeted, _target, _targetTargeting, targetOf,
+        debugTargetObject, verbose;
 
     void OnEnable()
     {
@@ -108,6 +118,8 @@ public class TargetingEditor : Editor
         _target = serializedObject.FindProperty(nameof(_target));
         _targetTargeting = serializedObject.FindProperty(nameof(_targetTargeting));
         targetOf = serializedObject.FindProperty(nameof(targetOf));
+        debugTargetObject = serializedObject.FindProperty(nameof(debugTargetObject));
+        verbose = serializedObject.FindProperty(nameof(verbose));
     }
 
     public override void OnInspectorGUI()
@@ -117,15 +129,28 @@ public class TargetingEditor : Editor
 
         bool wasEnabled = GUI.enabled;
 
+        Targeting script = target as Targeting;
+
         EditorGUILayout.PropertyField(onTargetSet);
         EditorGUILayout.PropertyField(onTargeted);
         EditorGUILayout.PropertyField(onTargetCleared);
         EditorGUILayout.PropertyField(onUntargeted);
 
         EditorGUILayout.LabelField("Debugging", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(verbose);
         GUI.enabled = false;
         EditorGUILayout.PropertyField(_target);
         EditorGUILayout.PropertyField(_targetTargeting);
+
+        EditorGUILayout.BeginHorizontal();
+        {
+            bool doTarget = GUILayout.Button("Set Target");
+            EditorGUILayout.ObjectField(debugTargetObject, GUIContent.none);
+            if (doTarget) script.SetTarget(debugTargetObject.objectReferenceValue as GameObject);
+        }
+        EditorGUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Clear Target")) script.ClearTarget();
 
         EditorGUILayout.LabelField("Target Of");
         EditorGUI.indentLevel++;

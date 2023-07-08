@@ -28,73 +28,91 @@ public class NetworkTargeting : NetworkBehaviour
     }
 
     // Awake -> OnEnable -> OnNetworkSpawn -> Start
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        if (IsClient)
+        base.OnNetworkSpawn();
+
+        if (!IsOwner) targeting.enabled = false;
+        else
         {
-            targeting.onTargetSet.AddListener(() => SetTargetServerRpc(OwnerClientId, targeting.target.OwnerClientId));
-            targeting.onTargetCleared.AddListener(() => ClearTargetServerRpc(OwnerClientId));
+            // Connect targeting events
+            if (IsOwner && !IsHost)
+            {
+                targeting.onTargetSet.AddListener(OnTargetSet);
+                targeting.onTargetCleared.AddListener(OnTargetCleared);
+            }
         }
     }
 
+    public override void OnNetworkDespawn()
+    {
+        // Disconnect targeting events
+        if (IsOwner && !IsHost)
+        {
+            targeting.onTargetSet.RemoveListener(OnTargetSet);
+            targeting.onTargetCleared.RemoveListener(OnTargetCleared);
+        }
+        base.OnNetworkDespawn();
+    }
+
+    private void OnTargetSet()
+    {
+        NetworkObject networkObject = targeting.target.GetComponentInParent<NetworkObject>(true);
+        if (networkObject == null) networkObject = targeting.target.GetComponentInChildren<NetworkObject>(true);
+        if (networkObject == null) throw new System.Exception("Cannot set a target to something which has no NetworkObject.");
+        if (IsServer) SetTargetClientRpc(targeting.target.clientId);
+        else if (IsOwner) SetTargetServerRpc(targeting.target.clientId);
+    }
+
+    private void OnTargetCleared()
+    {
+        if (IsServer) ClearTargetClientRpc();
+        else if (IsOwner) ClearTargetServerRpc();
+    }
+
 
     /// <summary>
     /// Called by clients only, run by the server only.
     /// </summary>
     [ServerRpc]
-    public void SetTargetServerRpc(ulong clientId, ulong targetId)
+    public void SetTargetServerRpc(ulong targetClientId)
     {
-        // Update the server's state. targeting is the script attached to the object on the server
-        // that corresponds with the object that originally called this method.
-        targeting.SetTarget(Character.clientIds[targetId]);
-
-        // Update the clients' states
-        SetTargetClientRpc(clientId, targetId);
+        targeting.SetTarget(NetworkManager.Singleton.GetCharacter(targetClientId).gameObject);
+        SetTargetClientRpc(targetClientId);
     }
 
     /// <summary>
     /// Called by the server only, run by the clients only.
     /// </summary>
     [ClientRpc]
-    public void SetTargetClientRpc(ulong clientId, ulong targetId)
+    public void SetTargetClientRpc(ulong targetClientId)
     {
-        // clientId = the client that sent the message to the server
-
-        // Don't update the client that already set their target
-        if (OwnerClientId == clientId) return;
-
-        // Update all the other clients' corresponding game objects that represent the game object who
-        // originally called this method.
-        targeting.SetTarget(Character.clientIds[targetId]);
+        if (!IsOwner)
+        {
+            //Debug.Log("ClientRpc "+ character.gameObject.name + " set target to " + targetClientId);
+            targeting.SetTarget(NetworkManager.Singleton.GetCharacter(targetClientId).gameObject);
+        }
     }
 
     /// <summary>
     /// Called by clients only, run by the server only.
     /// </summary>
     [ServerRpc]
-    public void ClearTargetServerRpc(ulong clientId)
+    public void ClearTargetServerRpc()
     {
-        // Update the server's state
         targeting.ClearTarget();
-
-        // Update the clients' states
-        ClearTargetClientRpc(clientId);
+        ClearTargetClientRpc();
     }
 
     /// <summary>
     /// Called by the server only, run by the clients only.
     /// </summary>
     [ClientRpc]
-    public void ClearTargetClientRpc(ulong clientId)
+    public void ClearTargetClientRpc()
     {
-        // clientId = the client that sent the message to the server
-        
-        // Don't update the client who orignally called this method.
-        if (OwnerClientId == clientId) return;
-
-        // Update all the other clients
-        targeting.ClearTarget();
+        if (!IsOwner)
+        {
+            targeting.ClearTarget();
+        }
     }
-
-
 }
