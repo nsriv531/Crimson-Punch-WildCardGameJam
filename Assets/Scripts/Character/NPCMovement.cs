@@ -93,7 +93,7 @@ public class NPCMovement : MonoBehaviour
                 transform.forward = Vector3.RotateTowards(transform.forward, toTarget, rotationSpeed * Time.deltaTime, 0f);
             
                 if(Vector3.Angle(transform.forward, toTarget) < 5f)
-                    transform.position = Vector3.MoveTowards(transform.position, yCorrectedPosition, movementSpeed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, _path.corners[_currentPathIndex], movementSpeed * Time.deltaTime);
             }
 
             return;
