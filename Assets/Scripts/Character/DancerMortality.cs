@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class DancerMortality : MonoBehaviourPunCallbacks
 {
@@ -35,3 +37,23 @@ public class DancerMortality : MonoBehaviourPunCallbacks
         }
     }
 }
+
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(DancerMortality))]
+public class DancerMortalityEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        bool wasEnabled = GUI.enabled;
+
+        DancerMortality script = target as DancerMortality;
+        GUI.enabled = Application.isPlaying;
+        if (GUILayout.Button("Kill")) script.Kill();
+
+        GUI.enabled = wasEnabled;
+    }
+}
+#endif

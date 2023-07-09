@@ -53,6 +53,13 @@ public class NPCMovementPUN : MonoBehaviourPunCallbacks
     {
         NavMesh.SamplePosition(navigationPosition, out NavMeshHit hit, 20f, 1);
 
+        // Only use finite positions
+        if (!float.IsFinite(hit.position.x) || !float.IsFinite(hit.position.y) || !float.IsFinite(hit.position.z))
+        {
+            Debug.LogWarning("Non-finite position " + hit.position, gameObject);
+            return;
+        }
+
         if (_agent.CalculatePath(hit.position, _path))
         {
             //state.Value = NPCState.Moving;

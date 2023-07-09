@@ -41,6 +41,7 @@ public class PUNPlayer : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     public void ShowPlayerModel(bool isMale)
     {
+        Debug.Log("Showing player model isMale = " + isMale, gameObject);
         (isMale? malePlayerModel : femalePlayerModel).SetActive(true);
     }
     
@@ -66,8 +67,10 @@ public class PUNPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (!photonView.IsMine)
         {
-            transform.position = Vector3.Lerp(transform.position, _networkPosition, 5f * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, _networkRotation, 5f * Time.deltaTime);
+            // You have committed a sin with lerping on deltaTime....
+            Vector3 newPosition = Vector3.Lerp(transform.position, _networkPosition, 5f * Time.deltaTime);
+            Quaternion newRotation = Quaternion.Lerp(transform.rotation, _networkRotation, 5f * Time.deltaTime);
+            transform.SetPositionAndRotation(newPosition, newRotation);
         }
     }
 
