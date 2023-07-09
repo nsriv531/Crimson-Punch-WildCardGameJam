@@ -51,8 +51,10 @@ public class NPCMovementPUN : MonoBehaviourPunCallbacks
     [PunRPC]
     void ReceiveNewPath(Vector3 navigationPosition)
     {
-        NavMesh.SamplePosition(navigationPosition, out NavMeshHit hit, 20f, 1);
+        var success = NavMesh.SamplePosition(navigationPosition, out NavMeshHit hit, 20f, 1);
 
+        if (!success) return;
+        
         // Only use finite positions
         if (!float.IsFinite(hit.position.x) || !float.IsFinite(hit.position.y) || !float.IsFinite(hit.position.z))
         {
