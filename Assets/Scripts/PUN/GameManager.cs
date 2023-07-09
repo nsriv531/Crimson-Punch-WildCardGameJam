@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         GameManager.instance = this;
         PhotonNetwork.ConnectUsingSettings();
+        Screen.SetResolution(792, 432, false, 60);
     }
 
     public override void OnConnectedToMaster()
@@ -61,15 +62,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         
     }
-
-    void Update()
-    {
-        if (PhotonNetwork.IsMasterClient && Input.GetKeyDown(KeyCode.Space) && _gameState == GameState.Lobby)
-        {
-            BeginMatch();
-        }
-    }
-
+    
+    [PunRPC]
     public void BeginMatch(int npcCount = 128)
     {
         _gameState = GameState.Playing;

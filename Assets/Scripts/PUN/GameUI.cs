@@ -51,17 +51,22 @@ public class GameUI : MonoBehaviourPunCallbacks
         roomPanel.SetActive(false);
         roomJoinPanel.SetActive(true);
         hud.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void StartGame()
     {
-        GameManager.instance.BeginMatch(npcCount);
+        GameManager.instance.photonView.RPC("BeginMatch", RpcTarget.AllBuffered, npcCount);
         photonView.RPC("ReceiveGameStart", RpcTarget.AllBuffered);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     [PunRPC]
     public void ReceiveGameStart()
     {
+        GameManager.instance.livingPlayers = PhotonNetwork.PlayerList.Length;
         menuCamera.SetActive(false);
         roomPanel.SetActive(false);
         hud.SetActive(true);

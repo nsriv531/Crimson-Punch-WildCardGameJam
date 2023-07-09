@@ -10,6 +10,7 @@ using UnityEditor;
 public class DancerMortality : MonoBehaviourPunCallbacks
 {
     public bool isPlayer;
+    public GameObject corpsePrefab;
 
     public UnityEvent onDeath = new UnityEvent();
 
@@ -22,8 +23,17 @@ public class DancerMortality : MonoBehaviourPunCallbacks
     private void KillRPC()
     {
         PhotonNetwork.Destroy(gameObject);
-        Debug.Log("Is kill");
-        // TODO: play death effect
+        
+        // Raycast downwards and instantiate a corpse there
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 100f))
+        {
+            // Instantiate the corpse at the hit's point, with up being the hit's normal
+            GameObject corpse = PhotonNetwork.Instantiate(corpsePrefab.name, hit.point + hit.normal * 0.1f, Quaternion.LookRotation(hit.normal));
+            corpse.GetComponent<PUNCorpse>().photonView.RPC("SetOrientation", RpcTarget.AllBuffered, hit.normal);
+        }
+
+
+        // PhotonNetwork.Instantiate(corpsePrefab)
 
         onDeath.Invoke(); // Does this go here?
 

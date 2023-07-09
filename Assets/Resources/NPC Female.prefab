@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
+  corpsePrefab: {fileID: 8042079565836514211, guid: 332d89dedb64a664190168c1931542d2, type: 3}
   onDeath:
     m_PersistentCalls:
       m_Calls:
