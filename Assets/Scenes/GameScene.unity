@@ -891,6 +891,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76dfa59c1b499cf4e8428b7e24015943, type: 3}
   m_PrefabInstance: {fileID: 31534227}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &51447647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6642142743117388715, guid: 4643b49537c29e740aac353f9715b39f, type: 3}
+  m_PrefabInstance: {fileID: 976505251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &53509624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6388,7 +6393,7 @@ GameObject:
   - component: {fileID: 329299751}
   - component: {fileID: 329299752}
   m_Layer: 0
-  m_Name: Song 1 
+  m_Name: Song 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19899,6 +19904,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76dfa59c1b499cf4e8428b7e24015943, type: 3}
   m_PrefabInstance: {fileID: 1253143557}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1255175667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6642142744180301848, guid: 4643b49537c29e740aac353f9715b39f, type: 3}
+  m_PrefabInstance: {fileID: 976505251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1273574316
 GameObject:
   m_ObjectHideFlags: 0
@@ -20638,10 +20648,10 @@ MonoBehaviour:
   playerList: {fileID: 14185985}
   hostOnlyRoomPanel: {fileID: 1708576749}
   npcCountInputField: {fileID: 1750021276}
-  hud: {fileID: 0}
-  playersRemainingLabel: {fileID: 0}
-  femaleIndicator: {fileID: 0}
-  maleIndicator: {fileID: 0}
+  hud: {fileID: 51447647}
+  playersRemainingLabel: {fileID: 1739943863}
+  femaleIndicator: {fileID: 1255175667}
+  maleIndicator: {fileID: 1755185491}
 --- !u!223 &1373758381 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 5072407625171137422, guid: 7c2d34803ed4a5741a6c868ccb01a074, type: 3}
@@ -26004,6 +26014,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76dfa59c1b499cf4e8428b7e24015943, type: 3}
   m_PrefabInstance: {fileID: 1738664203}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1739943863 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6642142744591489291, guid: 4643b49537c29e740aac353f9715b39f, type: 3}
+  m_PrefabInstance: {fileID: 976505251}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1739992347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26671,6 +26692,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750021274}
   m_CullTransparentMesh: 1
+--- !u!1 &1755185491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6642142743477749550, guid: 4643b49537c29e740aac353f9715b39f, type: 3}
+  m_PrefabInstance: {fileID: 976505251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1762710316
 PrefabInstance:
   m_ObjectHideFlags: 0
