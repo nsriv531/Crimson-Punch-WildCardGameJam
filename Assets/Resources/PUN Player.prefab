@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 5
   forwardSpeed: 1
-  sidewaysSpeed: 1
+  sidewaysSpeed: 0
   backwardsSpeed: 2
   canSprint: 1
   sprintVelocity: 5
