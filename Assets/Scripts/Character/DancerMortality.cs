@@ -16,7 +16,7 @@ public class DancerMortality : MonoBehaviourPunCallbacks
 
     public void Kill()
     {
-        photonView.RPC("KillRPC", RpcTarget.AllBufferedViaServer);
+        photonView.RPC("KillRPC", RpcTarget.AllBuffered);
     }
 
     [PunRPC]
