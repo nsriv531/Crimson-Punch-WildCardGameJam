@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DancerMortality : MonoBehaviourPunCallbacks
 {
     public bool isPlayer;
     public GameObject deathEffect;
-    
+
+    public UnityEvent onDeath = new UnityEvent();
+
     public void Kill()
     {
         photonView.RPC("KillRPC", RpcTarget.AllBufferedViaServer);
@@ -19,6 +22,8 @@ public class DancerMortality : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.Destroy(gameObject);
         // TODO: play death effect
+
+        onDeath.Invoke(); // Does this go here?
 
         if (photonView.IsMine)
         {
