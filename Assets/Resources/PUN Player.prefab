@@ -286,6 +286,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 2
   cooldown: 1
+  onAttack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4762535519733589810}
+        m_TargetAssemblyTypeName: SwooshEffect, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3359349371433795218
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +623,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3409283854378908829, guid: 9977934266ecfd74bb1804d129457659, type: 3}
   m_PrefabInstance: {fileID: 3359349370279059592}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4762535519733589810 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7820820325742725050, guid: 9977934266ecfd74bb1804d129457659, type: 3}
+  m_PrefabInstance: {fileID: 3359349370279059592}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c9e98b530c99c4b9bf51eb72b99468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9082531344892400658
 PrefabInstance:
   m_ObjectHideFlags: 0
