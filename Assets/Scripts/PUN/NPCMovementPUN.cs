@@ -44,7 +44,7 @@ public class NPCMovementPUN : MonoBehaviourPunCallbacks
 
     void DecideNewPath()
     {
-        var navigationPosition = Random.insideUnitSphere * 20f + transform.position;
+        var navigationPosition = Random.insideUnitSphere.normalized * 20f + transform.position;
         photonView.RPC("ReceiveNewPath", RpcTarget.AllBufferedViaServer, navigationPosition);
     }
 
@@ -62,7 +62,7 @@ public class NPCMovementPUN : MonoBehaviourPunCallbacks
             return;
         }
 
-        if (_agent.CalculatePath(hit.position, _path))
+        if (_path != null && _agent.CalculatePath(hit.position, _path))
         {
             //state.Value = NPCState.Moving;
             _state = NPCState.Moving;
@@ -71,6 +71,7 @@ public class NPCMovementPUN : MonoBehaviourPunCallbacks
         else
         {
             Idle();
+            return;
         }
 
         _pathCorners = _path.corners;
