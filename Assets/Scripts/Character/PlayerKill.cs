@@ -23,9 +23,9 @@ public class PlayerKill : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range))
         {
-            if (hit.collider.CompareTag("Dancer"))
+            if (hit.collider.CompareTag("NPC") || hit.collider.CompareTag("Player"))
             {
-                hit.collider.GetComponent<Character>().Kill();
+                hit.collider.GetComponent<DancerMortality>().Kill();
             }
         }
         yield return new WaitForSeconds(cooldown);

@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject femaleNPC;
     
     public Transform spawnpoint;
+    
+    public int livingPlayers;
 
     public GameObject localPlayerInstance;
     private List<Player> players = new List<Player>();
@@ -55,6 +57,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void BeginMatch()
     {
+        livingPlayers = players.Count;
+        
         if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("SpawnMyPlayer", RpcTarget.All);
@@ -64,8 +68,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             
             }
         }
-
-        
     }
 
     [PunRPC]
@@ -73,5 +75,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         var pt = Random.insideUnitCircle;
         var instance = PhotonNetwork.Instantiate(player.name, spawnpoint.position + new Vector3(pt.x, 0.0f, pt.y) * 5.0f, spawnpoint.rotation);
+    }
+
+    public void PlayerKilled()
+    {   
+        livingPlayers--;
+        if (livingPlayers <= 1)
+        {
+            // TODO: win condition
+        }
     }
 }
