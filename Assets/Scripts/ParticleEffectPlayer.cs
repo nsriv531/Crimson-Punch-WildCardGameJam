@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -8,6 +9,8 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class ParticleEffectPlayer : MonoBehaviour
 {
+    public UnityEvent onPlay = new UnityEvent();
+
     private List<ParticleSystem> _particleSystems;
     [HideInInspector] public List<ParticleSystem> particleSystems
     {
@@ -25,6 +28,7 @@ public class ParticleEffectPlayer : MonoBehaviour
         {
             particleSystem.Play();
         }
+        onPlay.Invoke();
     }
 }
 
