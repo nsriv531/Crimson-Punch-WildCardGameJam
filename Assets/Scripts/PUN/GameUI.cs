@@ -55,9 +55,15 @@ public class GameUI : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
+        GameManager.instance.BeginMatch(npcCount);
+        photonView.RPC("ReceiveGameStart", RpcTarget.AllBuffered);
+    }
+
+    [PunRPC]
+    public void ReceiveGameStart()
+    {
         menuCamera.SetActive(false);
         roomPanel.SetActive(false);
-        GameManager.instance.BeginMatch(npcCount);
         hud.SetActive(true);
         UpdatePlayersRemaining(GameManager.instance.livingPlayers);
     }
