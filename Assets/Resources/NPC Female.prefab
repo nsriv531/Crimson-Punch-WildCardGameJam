@@ -457,7 +457,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  deathEffect: {fileID: 0}
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6068172416800090051
 MonoBehaviour:
   m_ObjectHideFlags: 0
