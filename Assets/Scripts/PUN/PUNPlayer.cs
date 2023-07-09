@@ -20,8 +20,10 @@ public class PUNPlayer : MonoBehaviourPunCallbacks, IPunObservable
     {
         // if this is my player...
         if (photonView.IsMine)
-        {   
-            photonView.RPC("ShowPlayerModel", RpcTarget.OthersBuffered, Random.Range(0.0f, 1.0f) < 0.5f);
+        {
+            var isMale = Random.Range(0.0f, 1.0f) < 0.5f;
+            photonView.RPC("ShowPlayerModel", RpcTarget.OthersBuffered, isMale);
+            GameUI.instance.IndicateGender(isMale);
         }
         // otherwise...
         else

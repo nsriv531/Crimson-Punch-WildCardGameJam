@@ -48,11 +48,12 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
                 if (!hovered.Contains(item)) hovered.Add(item);
                 item.OnPointerEnter(pointerEventData);
 
-                if (isMouseDown && !mouseDown.Contains(item))
+                if (isMouseDown && !mouseDown.Contains(item) && item.isActiveAndEnabled && item.gameObject.activeInHierarchy)
                 {
                     mouseDown.Add(item);
                     item.OnPointerDown(pointerEventData);
-                    if (item.GetComponent<Button>() != null) item.GetComponent<Button>().onClick.Invoke();
+                    var btn = item.GetComponent<Button>();
+                    if (btn != null && btn.isActiveAndEnabled) btn.onClick.Invoke();
                 }
             }
         }

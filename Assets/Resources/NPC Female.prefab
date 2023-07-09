@@ -452,7 +452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   closeEnoughDistance: 0.1
   movementSpeed: 1
-  rotationSpeed: 1
+  rotationSpeed: 180
   glanceSpeed: 2
   _verbose: 0
   _currentPathIndex: 0

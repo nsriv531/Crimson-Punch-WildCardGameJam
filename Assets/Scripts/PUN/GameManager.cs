@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void PlayerKilled()
     {   
         livingPlayers--;
+        GameUI.instance.UpdatePlayersRemaining(livingPlayers);
         if (livingPlayers <= 1)
         {
             // TODO: win condition
