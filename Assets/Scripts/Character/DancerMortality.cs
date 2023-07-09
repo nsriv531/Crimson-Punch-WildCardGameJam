@@ -8,7 +8,6 @@ using UnityEngine.Events;
 public class DancerMortality : MonoBehaviourPunCallbacks
 {
     public bool isPlayer;
-    public GameObject deathEffect;
 
     public UnityEvent onDeath = new UnityEvent();
 
