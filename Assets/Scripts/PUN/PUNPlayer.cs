@@ -21,7 +21,6 @@ public class PUNPlayer : MonoBehaviourPunCallbacks, IPunObservable
         // if this is my player...
         if (photonView.IsMine)
         {   
-            GameManager.instance.localPlayerInstance = gameObject;
             photonView.RPC("ShowPlayerModel", RpcTarget.OthersBuffered, Random.Range(0.0f, 1.0f) < 0.5f);
         }
         // otherwise...

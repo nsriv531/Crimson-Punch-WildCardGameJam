@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour {
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -transform.up, 1.05f);
+        return Physics.Raycast(transform.position, -transform.up, 1.1f);
     }
 
     void LimitSpeed()

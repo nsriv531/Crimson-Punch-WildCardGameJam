@@ -3,21 +3,33 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
     
+    enum GameState
+    {
+        Lobby,
+        Playing
+    }
+    
+    private GameState _gameState = GameState.Lobby;
+    
+    [Header("References")]
     public GameObject player;
     public GameObject maleNPC;
     public GameObject femaleNPC;
-    
-    public Transform spawnpoint;
-    
+
     public int livingPlayers;
 
     public GameObject localPlayerInstance;
-    private List<Player> players = new List<Player>();
+
+    public Transform mapTopLeft;
+    public Transform mapBottomRight;
+    
+    private List<GameObject> npcs = new List<GameObject>();
     
     void Start()
     {
@@ -27,54 +39,95 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinRandomOrCreateRoom();
+        
     }
     
     public override void OnJoinedRoom()
     {
-        players.Add(PhotonNetwork.LocalPlayer);
+        
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        players.Add(newPlayer);
+        
     }
     
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        players.Remove(otherPlayer);
+        
     }
 
     void Update()
     {
-        if (PhotonNetwork.IsMasterClient && Input.GetKeyDown(KeyCode.Space))
+        if (PhotonNetwork.IsMasterClient && Input.GetKeyDown(KeyCode.Space) && _gameState == GameState.Lobby)
         {
             BeginMatch();
         }
     }
 
-    public void BeginMatch()
+    public void BeginMatch(int npcCount = 128)
     {
-        livingPlayers = players.Count;
+        _gameState = GameState.Playing;
+        livingPlayers = PhotonNetwork.PlayerList.Length;
         
         if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("SpawnMyPlayer", RpcTarget.All);
-            
+
+            for (int i = 0; i < npcCount; i++)
             {
-                var instance = PhotonNetwork.Instantiate(femaleNPC.name, spawnpoint.position, spawnpoint.rotation);
-            
+                SpawnNPC();
             }
         }
+    }
+
+    public void EndMatch()
+    {
+        _gameState = GameState.Lobby;
+        livingPlayers = 0;
+        foreach (var npc in npcs)
+        {
+            PhotonNetwork.Destroy(npc);
+        }
+        npcs.Clear();
+        photonView.RPC("DeleteMyPlayer", RpcTarget.All);
+    }
+    
+    [PunRPC]
+    private void DeleteMyPlayer()
+    {
+        if (localPlayerInstance != null)
+        {
+            PhotonNetwork.Destroy(localPlayerInstance);
+            localPlayerInstance = null;
+        }
+    }
+
+    Vector3 GetRandomPointOnNavMesh()
+    {
+        while (true) {
+            var topLeft = mapTopLeft.position;
+            var bottomRight = mapBottomRight.position;
+            var randomPt = new Vector3(Random.Range(topLeft.x, bottomRight.x), Random.Range(0.0f, 10.0f), Random.Range(topLeft.z, bottomRight.z));
+            var navMeshPt = NavMesh.SamplePosition(randomPt, out var hit, 100.0f, NavMesh.AllAreas);
+            if (navMeshPt) return hit.position;
+        }
+    }
+
+    // Spawn the NPC in a random point within the top left and bottom right of the map
+    void SpawnNPC()
+    {
+        var spawnPoint = GetRandomPointOnNavMesh();
+        var variant = Random.Range(0.0f, 1.0f) < 0.5f ? maleNPC : femaleNPC;
+        var instance = PhotonNetwork.Instantiate(variant.name, spawnPoint, Quaternion.identity);
+        npcs.Add(instance);
     }
 
     [PunRPC]
     public void SpawnMyPlayer()
     {
-        var pt = Random.insideUnitCircle;
-        var instance = PhotonNetwork.Instantiate(player.name, spawnpoint.position + new Vector3(pt.x, 0.0f, pt.y) * 5.0f, spawnpoint.rotation);
+        var spawnPoint = GetRandomPointOnNavMesh();
+        localPlayerInstance = PhotonNetwork.Instantiate(player.name, spawnPoint, Quaternion.identity);
     }
 
     public void PlayerKilled()

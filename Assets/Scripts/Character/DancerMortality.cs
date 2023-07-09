@@ -22,6 +22,7 @@ public class DancerMortality : MonoBehaviourPunCallbacks
     private void KillRPC()
     {
         PhotonNetwork.Destroy(gameObject);
+        Debug.Log("Is kill");
         // TODO: play death effect
 
         onDeath.Invoke(); // Does this go here?
