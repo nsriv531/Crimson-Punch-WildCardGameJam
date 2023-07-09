@@ -6,7 +6,6 @@ using UnityEditor;
 #endif
 
 // This script rotates its parent object over time at a constant angular velocity.
-[ExecuteInEditMode]
 public class Rotate : MonoBehaviour
 {
     [Tooltip("When set to true, the Angular Velocity becomes the scale by which to multiply the noise on each axis.")]
