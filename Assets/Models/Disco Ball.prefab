@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2565907712798420805}
-  m_LocalRotation: {x: 0, y: 0.03559486, z: 0, w: 0.9993663}
+  m_LocalRotation: {x: 0, y: 0.8672309, z: 0, w: 0.49790612}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -82,6 +82,10 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: 24c0818b929dfb040bfa7bf9acfb5086, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 75eba5db7dbb3c94683a7f2ee66f0aa7, type: 2}
     - target: {fileID: 65702495048144492, guid: 24c0818b929dfb040bfa7bf9acfb5086, type: 3}
       propertyPath: m_IsActive
       value: 0
