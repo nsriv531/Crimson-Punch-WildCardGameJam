@@ -9,7 +9,8 @@ using System.Collections.Generic;
 
 public class GraphicRaycasterRaycasterExample : MonoBehaviour
 {
-    public float mousePosCoefficient = 0.5f;
+    public float gameWidth;
+    public float gameHeight;
     GraphicRaycaster raycaster;
     PointerEventData pointerEventData;
     EventSystem eventSystem;
@@ -17,7 +18,9 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
     public List<Selectable> hovered = new List<Selectable>();
     public List<Selectable> hoveredLastFrame = new List<Selectable>();
 
-    List<Selectable> mouseDown = new List<Selectable>();
+    private List<Selectable> mouseDown = new List<Selectable>();
+    
+    
 
     void Start()
     {
@@ -27,6 +30,7 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
 
     void LateUpdate()
     {
+        var mousePosCoefficient = new Vector2(gameWidth / Screen.width, gameHeight / Screen.height); 
         var isMouseDown = Input.GetMouseButton(0);
 
         pointerEventData = new PointerEventData(eventSystem);

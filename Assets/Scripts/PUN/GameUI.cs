@@ -7,15 +7,19 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviourPunCallbacks
 {
+    public GameObject menuCamera;
     public GameObject roomJoinPanel;
     public InputField nicknameInputField;
     public InputField roomNameInputField;
 
     public GameObject roomPanel;
-    public GameObject hostOnlyRoomPanel;
-    
     public Text playersLabel;
     public Text playerList;
+    
+    public GameObject hostOnlyRoomPanel;
+    public InputField npcCountInputField;
+
+    private int npcCount = 128;
 
     public override void OnConnectedToMaster()
     {
@@ -24,9 +28,30 @@ public class GameUI : MonoBehaviourPunCallbacks
 
     public void JoinOrCreateGame()
     {
-        Debug.Log("JOINING!");
         PhotonNetwork.NickName = nicknameInputField.text;
         PhotonNetwork.JoinOrCreateRoom(roomNameInputField.text, new RoomOptions(), TypedLobby.Default);
+    }
+
+    public void LeaveGame()
+    { 
+        PhotonNetwork.LeaveRoom();
+        roomPanel.SetActive(false);
+        roomJoinPanel.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        menuCamera.SetActive(false);
+        GameManager.instance.BeginMatch(npcCount);
+    }
+
+    public void SubmitPlayerCount()
+    {
+        if (!int.TryParse(npcCountInputField.text.Trim(), out npcCount))
+        {
+            npcCount = 128;
+            npcCountInputField.text = npcCount.ToString();
+        }
     }
 
     public override void OnJoinedRoom()
