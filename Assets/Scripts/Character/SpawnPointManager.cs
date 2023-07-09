@@ -10,17 +10,6 @@ using UnityEditor;
 /// </summary>
 public class SpawnPointManager : MonoBehaviour
 {
-    private Character _character;
-    [HideInInspector] public Character character
-    {
-        get
-        {
-            if (_character == null) _character = GetComponentInParent<Character>(true);
-            if (_character == null) throw new System.Exception("Failed to find a Character component in any parent of " + gameObject);
-            return _character;
-        }
-    }
-
     private SpawnPoint GetRandomSpawnPoint()
     {
         List<SpawnPoint> spawnPoints = new List<SpawnPoint>(FindObjectsOfType<SpawnPoint>());
@@ -35,7 +24,7 @@ public class SpawnPointManager : MonoBehaviour
 
     public void SpawnCopyAtSpawnPoint(SpawnPoint spawnPoint)
     {
-        spawnPoint.SpawnCopy(character);
+        spawnPoint.SpawnCopy(gameObject);
     }
 
     public void SpawnAtRandomSpawnPoint()
@@ -45,7 +34,7 @@ public class SpawnPointManager : MonoBehaviour
 
     public void SpawnAtSpawnPoint(SpawnPoint spawnPoint)
     {
-        spawnPoint.Spawn(character);
+        spawnPoint.Spawn(gameObject);
     }
 }
 

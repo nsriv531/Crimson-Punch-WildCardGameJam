@@ -20,6 +20,7 @@ public class ExplosionEffect : MonoBehaviour
 
     public void Play()
     {
+        transform.SetParent(null);
         foreach(ParticleSystem particleSystem in particleSystems)
         {
             particleSystem.Play();
