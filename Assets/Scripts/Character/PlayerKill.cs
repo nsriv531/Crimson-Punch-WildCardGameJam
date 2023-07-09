@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerKill : MonoBehaviour
 {
     public float range;
     public float cooldown;
 
+    public UnityEvent onAttack = new UnityEvent();
+
     private bool _canAttack = true;
+
+    
     
     void Update()
     {
@@ -28,6 +33,7 @@ public class PlayerKill : MonoBehaviour
                 hit.collider.GetComponent<DancerMortality>().Kill();
             }
         }
+        onAttack.Invoke();
         yield return new WaitForSeconds(cooldown);
         _canAttack = true;
     }
