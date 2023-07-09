@@ -18,21 +18,19 @@ public class SpawnPoint : MonoBehaviour
     /// <summary>
     /// Move the given Character to the position of this Transform
     /// </summary>
-    public void Spawn(Character character)
+    public void Spawn(GameObject go)
     {
-        character.transform.SetPositionAndRotation(transform.position, GetRotation());
+        go.transform.SetPositionAndRotation(transform.position, GetRotation());
         onSpawn.Invoke();
     }
 
     /// <summary>
     /// Instantiate a copy of the GameObject the given Character is attached to at this Transform's position
     /// </summary>
-    public void SpawnCopy(Character character)
+    public void SpawnCopy(GameObject go)
     {
-        if (character.gameObject == LocalPlayer.gameObject) throw new System.Exception("Spawning a copy of the local player is not allowed.");
-
         GameObject newGO = null;
-        newGO = Instantiate(character.gameObject, transform.position, GetRotation(), null);
+        newGO = Instantiate(go, transform.position, GetRotation(), null);
 
         NetworkObject networkObject = newGO.GetComponent<NetworkObject>();
         if (networkObject != null) networkObject.Spawn();

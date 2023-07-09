@@ -397,14 +397,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6243075919736245984, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 225522783
-      objectReference: {fileID: 0}
     - target: {fileID: 7522897665647390073, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
       propertyPath: m_Name
       value: NPC Female
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 7522897665647390073, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -417,6 +414,9 @@ PrefabInstance:
     - {fileID: -8252911632702440539, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
     - {fileID: 6243075919736245984, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
     - {fileID: 4156359097543310287, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
+=======
+    m_RemovedComponents: []
+>>>>>>> dd60a52908adbd9a27787aa48d3c33a3ca6e83bd
   m_SourcePrefab: {fileID: 100100000, guid: fc5d5368505514c418656670d0eeb6a1, type: 3}
 --- !u!4 &996249149842345726 stripped
 Transform:
