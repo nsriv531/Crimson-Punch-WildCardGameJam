@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 
 public class GameUI : MonoBehaviourPunCallbacks
 {
+    public static GameUI instance;
+    
     public GameObject menuCamera;
     public GameObject roomJoinPanel;
     public InputField nicknameInputField;
@@ -18,8 +21,18 @@ public class GameUI : MonoBehaviourPunCallbacks
     
     public GameObject hostOnlyRoomPanel;
     public InputField npcCountInputField;
+    
+    public GameObject hud;
+    public Text playersRemainingLabel;
+    public GameObject femaleIndicator;
+    public GameObject maleIndicator;
 
     private int npcCount = 128;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     public override void OnConnectedToMaster()
     {
@@ -37,12 +50,16 @@ public class GameUI : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
         roomPanel.SetActive(false);
         roomJoinPanel.SetActive(true);
+        hud.SetActive(false);
     }
 
     public void StartGame()
     {
         menuCamera.SetActive(false);
+        roomPanel.SetActive(false);
         GameManager.instance.BeginMatch(npcCount);
+        hud.SetActive(true);
+        UpdatePlayersRemaining(GameManager.instance.livingPlayers);
     }
 
     public void SubmitPlayerCount()
@@ -80,5 +97,15 @@ public class GameUI : MonoBehaviourPunCallbacks
         {
             playerList.text += player.NickName + "\n";
         }
+    }
+
+    public void IndicateGender(bool isMale)
+    {
+        (isMale? maleIndicator : femaleIndicator).SetActive(true);
+    }
+    
+    public void UpdatePlayersRemaining(int playersRemaining)
+    {
+        playersRemainingLabel.text = playersRemaining + " PLAYERS REMAIN";
     }
 }
