@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 
 [ExecuteInEditMode]
-public class ExplosionEffect : MonoBehaviour
+public class ParticleEffectPlayer : MonoBehaviour
 {
     private List<ParticleSystem> _particleSystems;
     [HideInInspector] public List<ParticleSystem> particleSystems
@@ -30,7 +30,7 @@ public class ExplosionEffect : MonoBehaviour
 
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(ExplosionEffect))]
+[CustomEditor(typeof(ParticleEffectPlayer))]
 public class ExplosionEffectEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -39,7 +39,7 @@ public class ExplosionEffectEditor : Editor
 
         bool wasEnabled = GUI.enabled;
 
-        ExplosionEffect script = target as ExplosionEffect;
+        ParticleEffectPlayer script = target as ParticleEffectPlayer;
         GUI.enabled = Application.isPlaying;
         if (GUILayout.Button("Play")) script.Play();
 
