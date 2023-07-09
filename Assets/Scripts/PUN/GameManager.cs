@@ -4,10 +4,15 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
+    public UnityEvent onWinCondition = new UnityEvent();
     
     enum GameState
     {
@@ -136,6 +141,42 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (livingPlayers <= 1)
         {
             // TODO: win condition
+            OnWinCondition();
         }
     }
+
+
+
+    public void OnWinCondition()
+    {
+        foreach (ConfettiBlaster blaster in FindObjectsOfType<ConfettiBlaster>())
+        {
+            blaster.GetComponent<ParticleEffectPlayer>().Play();
+        }
+
+        onWinCondition.Invoke();
+    }
 }
+
+
+
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(GameManager))]
+public class GameManagerEditor: Editor
+{
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        bool wasEnabled = GUI.enabled;
+
+        GUI.enabled = Application.isPlaying;
+
+        GameManager script = target as GameManager;
+        if (GUILayout.Button("Test OnWinCondition")) script.OnWinCondition();
+
+        GUI.enabled = wasEnabled;
+    }
+}
+#endif
