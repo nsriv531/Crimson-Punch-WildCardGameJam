@@ -48,6 +48,7 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
                 {
                     mouseDown.Add(item);
                     item.OnPointerDown(pointerEventData);
+                    if (item.GetComponent<Button>() != null) item.GetComponent<Button>().onClick.Invoke();
                 }
             }
         }
