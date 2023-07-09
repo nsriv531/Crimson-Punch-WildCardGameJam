@@ -22,7 +22,8 @@ public class DancerMortality : MonoBehaviourPunCallbacks
     [PunRPC]
     private void KillRPC()
     {
-        PhotonNetwork.Destroy(gameObject);
+        if(photonView.IsMine)
+            PhotonNetwork.Destroy(gameObject);
         
         // Raycast downwards and instantiate a corpse there
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 100f))
@@ -37,10 +38,6 @@ public class DancerMortality : MonoBehaviourPunCallbacks
 
         onDeath.Invoke(); // Does this go here?
 
-        if (photonView.IsMine)
-        {
-            // TODO: move camera to "spectator" view overlooking the map
-        }
 
         if (isPlayer)
         {
