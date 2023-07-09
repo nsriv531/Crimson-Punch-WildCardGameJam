@@ -9,6 +9,8 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class ParticleEffectPlayer : MonoBehaviour
 {
+    [SerializeField] private bool _deParentOnPlay = true;
+
     public UnityEvent onPlay = new UnityEvent();
 
     private List<ParticleSystem> _particleSystems;
@@ -23,7 +25,7 @@ public class ParticleEffectPlayer : MonoBehaviour
 
     public void Play()
     {
-        transform.SetParent(null);
+        if (_deParentOnPlay) transform.SetParent(null);
         foreach(ParticleSystem particleSystem in particleSystems)
         {
             particleSystem.Play();
