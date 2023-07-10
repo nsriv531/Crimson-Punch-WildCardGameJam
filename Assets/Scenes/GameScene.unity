@@ -32670,18 +32670,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1228518456}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
   player: {fileID: 1939906498281976436, guid: 602bccaef4026df45870efafb763bb1f, type: 3}
   maleNPC: {fileID: 6319944321144973305, guid: 4fbd4d903f765fe4ea264b3e4ecf2a53, type: 3}
   femaleNPC: {fileID: 6427629354272224442, guid: 2c9671e6eb887be4e8c85e4b0667be90, type: 3}
