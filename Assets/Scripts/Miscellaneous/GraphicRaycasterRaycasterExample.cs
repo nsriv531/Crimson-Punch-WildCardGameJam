@@ -2,6 +2,7 @@
 //Also attach a GraphicsRaycaster component to your canvas by clicking the Add Component button in the Inspector window.
 //Also make sure you have an EventSystem in your hierarchy.
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -9,8 +10,9 @@ using System.Collections.Generic;
 
 public class GraphicRaycasterRaycasterExample : MonoBehaviour
 {
-    public float gameWidth;
-    public float gameHeight;
+    public Vector2 referenceResolution = new Vector2(384, 216);
+    public float clickCooldown = 0.1f;
+    
     GraphicRaycaster raycaster;
     PointerEventData pointerEventData;
     EventSystem eventSystem;
@@ -20,6 +22,7 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
 
     private List<Selectable> mouseDown = new List<Selectable>();
     
+    public bool isOnCooldown = false;
     
 
     void Start()
@@ -30,7 +33,7 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
 
     void LateUpdate()
     {
-        var mousePosCoefficient = new Vector2(gameWidth / Screen.width, gameHeight / Screen.height); 
+        var mousePosCoefficient = new Vector2(referenceResolution.x / Screen.width, referenceResolution.y / Screen.height); 
         var isMouseDown = Input.GetMouseButton(0);
 
         pointerEventData = new PointerEventData(eventSystem);
@@ -40,6 +43,8 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
         raycaster.Raycast(pointerEventData, results);
 
         hovered.Clear();
+        
+        bool clickedSomething = false;
         foreach (RaycastResult result in results)
         {
             var selectables = result.gameObject.GetComponents<Selectable>();
@@ -48,14 +53,30 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
                 if (!hovered.Contains(item)) hovered.Add(item);
                 item.OnPointerEnter(pointerEventData);
 
-                if (isMouseDown && !mouseDown.Contains(item) && item.isActiveAndEnabled && item.gameObject.activeInHierarchy)
+                if (isMouseDown && !isOnCooldown && !mouseDown.Contains(item) && item.isActiveAndEnabled && item.gameObject.activeInHierarchy && item.IsInteractable())
                 {
                     mouseDown.Add(item);
                     item.OnPointerDown(pointerEventData);
                     var btn = item.GetComponent<Button>();
-                    if (btn != null && btn.isActiveAndEnabled) btn.onClick.Invoke();
+                    // var scrollable = item.GetComponent<Scrollbar>();
+                    
+                    if (btn != null && btn.isActiveAndEnabled && btn.IsInteractable()) 
+                        btn.onClick.Invoke();
+                    
+                    // if (scrollable != null && scrollable.isActiveAndEnabled && scrollable.IsInteractable())
+                    //     scrollable.OnBeginDrag(pointerEventData);
+                    
+                    
+                    
+                    clickedSomething = true;
                 }
             }
+        }
+        
+        if (clickedSomething)
+        {
+            isOnCooldown = true;
+            // StartCoroutine(RefreshCooldown());
         }
 
         foreach (var item in hoveredLastFrame)
@@ -73,6 +94,14 @@ public class GraphicRaycasterRaycasterExample : MonoBehaviour
                 mouseDown[i].OnPointerUp(pointerEventData);
                 mouseDown.RemoveAt(i);
             }
+
+            isOnCooldown = false;
         }
+    }
+
+    IEnumerator RefreshCooldown()
+    {
+        yield return new WaitForSeconds(clickCooldown);
+        isOnCooldown = false;
     }
 }

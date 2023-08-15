@@ -2,10 +2,12 @@
 {
     Properties
     {
-        _Color ("Color", Color) = (1,1,1,1)
+        _Color ("Color", Color) = (1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _LightingHarshness ("Lighting Harshness", Float) = 3.0
         _LightingBoost ("Lighting Boost", Float) = 2.5
+        _LightingCrunch ("Lighting Crunch", Float) = 8.0
+        _Brightness ("Brightness", Float) = 1.0
     }
     SubShader
     {
@@ -17,10 +19,15 @@
         #pragma surface surf Lit
 
         sampler2D _MainTex;
+
+        UNITY_INSTANCING_BUFFER_START(Props)
+            UNITY_DEFINE_INSTANCED_PROP(fixed3, _Color)
+        UNITY_INSTANCING_BUFFER_END(Props)
         
-        fixed4 _Color;
         float _LightingHarshness;
         float _LightingBoost;
+        float _LightingCrunch;
+        float _Brightness;
         
         struct Input
         {
@@ -31,7 +38,7 @@
         {
             float NdotL = dot(s.Normal, lightDir);
             half4 c;
-            c.rgb = s.Albedo * max(0, pow(NdotL, _LightingHarshness) * _LightingBoost);
+            c.rgb = s.Albedo * floor(max(0, pow(NdotL * atten, _LightingHarshness) * _LightingBoost) * _LightingCrunch) / _LightingCrunch;
             c.a = s.Alpha;
             return c;
         }
@@ -39,9 +46,9 @@
         void surf (Input IN, inout SurfaceOutput o)
         {
             // Albedo comes from a texture tinted by color
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            fixed3 c = tex2D (_MainTex, IN.uv_MainTex).rgb * UNITY_ACCESS_INSTANCED_PROP(Props, _Color) * _Brightness;
             o.Albedo = c.rgb;
-            o.Alpha = c.a;
+            o.Alpha = 1.0;
         }
         ENDCG
     }

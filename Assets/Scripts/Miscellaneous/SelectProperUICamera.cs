@@ -10,8 +10,11 @@ public class SelectProperUICamera : MonoBehaviour
 
     void Update()
     {
-        if(!(_camera && _camera.isActiveAndEnabled && _camera.gameObject.activeInHierarchy)) {
-            _camera = Camera.main.transform.Find("UI Camera").GetComponent<Camera>();
+        if(!(_camera && _camera.isActiveAndEnabled && _camera.gameObject.activeInHierarchy))
+        {
+            var mainCamera = Camera.main;
+            if(mainCamera)
+                _camera = mainCamera.transform.Find("UI Camera")?.GetComponent<Camera>();
             canvas.worldCamera = _camera;
         }
     }

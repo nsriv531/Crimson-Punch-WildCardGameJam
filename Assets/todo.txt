@@ -1,0 +1,22 @@
+- region selector
+- refresh button has minor graphical error
+- fucked up hitbox on railing
+- no password if no password
+- lights turn off
+- you killed X message
+- leaving mid-game
+  - host too
+
+x message log in bottom left
+x disallow same names
+x cooldown not showing
+x INPUT SANITISATION
+x FIX GAME ENDING
+x negative NPC number
+x limit username length
+x spaces as username BAD
+x no newlines
+x disallow non-ASCII names
+
+? move head without body
+? limit sprinting
